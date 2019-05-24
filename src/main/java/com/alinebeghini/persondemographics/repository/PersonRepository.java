@@ -1,17 +1,21 @@
 package com.alinebeghini.persondemographics.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.alinebeghini.persondemographics.entity.Person;
 
+/**
+ * Class repository of the person entity.
+ * 
+ * @author Aline
+ *
+ */
 public interface PersonRepository extends JpaRepository<Person, String> {
 
 	/**
-     * Find all register.
+     * Find by pps number.
      * 
-     * @return list of people
+     * @return person
      */
-    List<Person> findAll();
+    Person findByPpsn(String ppsn);
 }

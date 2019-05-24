@@ -2,44 +2,71 @@
 <head>
 <title>Registration of Person</title>
 
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.css"  media="screen,projection"/>
-	<link type="text/css" rel="stylesheet" href="materialize.min.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" href="css/jquery-ui.min.css"/>
+	<style type="text/css">
+		.success-msg,
+		.error-msg {
+		  margin: 10px 0;
+		  padding: 10px;
+		  border-radius: 3px 3px 3px 3px;
+		}
+		.success-msg {
+		  color: #270;
+		  background-color: #DFF2BF;
+		}
+		.error-msg {
+		  color: #D8000C;
+		  background-color: #FFBABA;
+		}
+	</style>
 </head>
 <body>
 	 <form method="POST" action="saveperson">
 	 	<div style="text-align:center;"><h3>Person Demographics</h3></div>
+	 	<div th:if="${sucessMessage != null}" class="success-msg">
+			<div th:text="${sucessMessage}"></div>
+		</div>
+		<div th:if="${errorMessage != null}"class="error-msg">
+			<div th:text="${errorMessage}"></div>
+		</div>
+
 	 	<table style="width:80%;" align="center">
 	 		<tr>
-	 			<td width="15%">
+	 			<td width="15%" >
 	 				<label for="name">Name</label>
 	 			</td>
-	 			<td>
-	 				<input type="text" name="name" size="25"></input>
+	 			<td colspan="2">
+	 				<input type="text" id="name" name="name" maxlength="25" required="true"></input>
 	 			</td>
 	 		</tr>
 	 		<tr>
 	 			<td>
 	 				<label for="ppsn">PPS Number</label> 
 	 			</td>
-	 			<td>
-	 				<input type="text" name="ppsn" size="25"></input>
+	 			<td colspan="2">
+	 				<input type="text" id="ppsn" name="ppsn" required="true"></input>
 	 			</td>
 	 		</tr>
 	 		<tr>
 	 			<td>
 	 				<label for="dateOfBirth">Date of birth</label>
 	 			</td>
-	 			<td>
-	 				<input type="date" name="dateOfBirth" size="25"></input>
+	 			<td colspan="2">
+	 				<input type="date" id="dob" name="dateOfBirth" required="true" ></input>
 	 			</td>
 	 		</tr>
 	 		<tr>
 	 			<td>
 	 				<label for="mobilePhone">Mobile Phone</label>
 	 			</td>
+	 			<td width='30px'>
+	 				<input type="text" readonly="true" value="08"></input>
+	 			</td>
 	 			<td>
-	 				<input type="text" name="mobilePhone" size="25"></input>
+	 				<input type="text" id="phone" name="mobilePhone" required="true"></input>
 	 			</td>
 	 		</tr>
 	 	</table>
@@ -51,5 +78,29 @@
       
 	<script type="text/javascript" src="materialize/js/materialize.js"></script>
 	<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/jquery.mask.min.js"></script>
+	<script>	
+		setMaxDate16YearsOld();
+		function setMaxDate16YearsOld(){
+			var now = new Date();
+			now.setYear( now.getFullYear() - 16 );
+			document.getElementById('dob').max = formatDate(now);
+		}
+		
+		function formatDate(d) {
+		    var mes = '' + (d.getMonth() + 1),
+		        dia = '' + d.getDate(),
+		        ano = d.getFullYear();
+
+		    if (mes.length < 2) mes = '0' + mes;
+		    if (dia.length < 2) dia = '0' + dia;
+
+		    return [ano, mes, dia].join('-');
+		}
+		
+		$('#phone').mask("0 000 0000", {clearIfNotMatch: true});
+	</script>
 </body>
 </html>

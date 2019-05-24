@@ -1,34 +1,32 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Registration of Person</title>
+<title>List of People</title>
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-	rel="stylesheet">
-<link type="text/css" rel="stylesheet"
-	href="materialize/css/materialize.css" media="screen,projection" />
-<link type="text/css" rel="stylesheet" href="materialize.min.css"
-	media="screen,projection" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link type="text/css" rel="stylesheet" href="materialize/css/materialize.css" media="screen,projection" />
+	<link type="text/css" rel="stylesheet" href="materialize.min.css" media="screen,projection" />
 </head>
 <body>
-	<h2>List of People</h2>
+	<div style="text-align:center;"><h3>List of People</h3></div>
 	<div th:unless="${#lists.isEmpty(people)}">
-		<table>
-			<tr>
-				<th>Name</th>
-				<th>PPS Number</th>
-				<th>Date of Birth</th>
-				<th>Mobile Phone</th>
-			</tr>
-			<tr th:each="person : ${people}">
-				<td width="25%" th:text="${person.name}"></td>
-	 			<td width="25%" th:text="${person.ppsn}"></td>
-	 			<td width="25%" th:text="${person.dateOfBirth}"></td>
-	 			<td width="25%" th:text="${person.mobilePhone}"></td>
-			</tr>
-		</table>
+		<div style="max-height:75%; overflow:auto;">
+			<table style="width:80%;" align="center">
+				<tr>
+					<th>Name</th>
+					<th>PPS Number</th>
+					<th>Date of Birth</th>
+					<th>Mobile Phone</th>
+				</tr>
+					<tr th:each="person : ${people}">
+					<td th:text="${person.name}"></td>
+		 			<td th:text="${person.ppsn}"></td>
+		 			<td th:text="${#dates.format(person.dateOfBirth,'dd/MM/yyyy')}"></td>
+		 			<td th:text="${person.mobilePhone}"></td>
+				</tr>
+			</table>
+		</div>
 	</div>
-	<div th:if="${#lists.isEmpty(people)}">
+	<div style="text-align:center; margin-top:10%; height:20%;" th:if="${#lists.isEmpty(people)}">
 		<p>No records have been created</p>
 	</div>
 	<div style="margin-top:60px; text-align:center">
